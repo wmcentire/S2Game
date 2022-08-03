@@ -1,6 +1,6 @@
 #pragma once
-#include "../Math/Vector2.h"
-#include "../Math/Color.h"
+#include "Math/Vector2.h"
+#include "Math/Color.h"
 
 
 struct SDL_Renderer;
@@ -28,10 +28,14 @@ namespace pb
 		void DrawPoint(const Vector2& v, const Color& color);
 		void DrawPoint(float x, float y);
 
+		//image texture
+		void Draw(std::shared_ptr<Texture> texture, const Vector2& position, float angle = 0);
+
 		int GetWidth() { return m_width; }
 		int GetHeight() { return m_height; }
 
 		friend class Text;
+		friend class Texture;
 
 	private:
 		int m_width = 0;

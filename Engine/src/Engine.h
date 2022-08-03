@@ -13,6 +13,7 @@
 #include "Audio/AudioSystem.h"
 #include "Renderer/Font.h"
 #include "Renderer/Text.h"
+#include "Renderer/Texture.h"
 #include <vector>
 #include <memory>
 

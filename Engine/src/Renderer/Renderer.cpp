@@ -1,6 +1,9 @@
 #include "Renderer.h" 
+#include "Texture.h"
 #include <SDL.h>
 #include <SDL_ttf.h> 
+#include <SDL_image.h>
+
 namespace pb
 {
 	SDL_Renderer* renderer{ nullptr };
@@ -71,6 +74,18 @@ namespace pb
 	{
 		SDL_RenderDrawPointF(m_renderer, x, y);
 	}
+	void Renderer::Draw(std::shared_ptr<Texture> texture, const Vector2& position, float angle)
+	{
+		Vector2 size = texture->GetSize();
 
+		SDL_Rect dest;
+		// !! make sure to cast to int to prevent compiler warnings 
+		dest.x = position.x;// !! set to position x 
+		dest.y = position.y;// !! set to position y 
+		dest.w = size.x;// !! set to size x 
+		dest.h = size.y;// !! set to size y 
+
+		SDL_RenderCopyEx(m_renderer, texture -> m_texture, nullptr, &dest, angle, nullptr, SDL_FLIP_NONE);
+	}
 	
 }

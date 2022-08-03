@@ -1,4 +1,5 @@
 #include "AudioSystem.h"
+#include "Core/Logger.h"
 #include <fmod.hpp> 
 
 namespace pb {
@@ -37,6 +38,9 @@ namespace pb {
 		{
 			FMOD::Sound* sound = nullptr;
 			m_fmodSystem->createSound(filename.c_str(), FMOD_DEFAULT, 0, &sound);
+			if (sound == nullptr){
+				LOG("Error creating sound %s.", filename.c_str());
+			}
 			m_sounds[name] = sound;
 		}
 	}

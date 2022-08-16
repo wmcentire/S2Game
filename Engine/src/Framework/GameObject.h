@@ -1,6 +1,7 @@
 #pragma once
 #include "Math/Transform.h"
-#include "Math/Vector2.h"
+
+#define REGISTER_CLASS(class) Factory::Instance().Register<class>(#class);
 
 namespace pb {
 

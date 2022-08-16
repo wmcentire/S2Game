@@ -1,6 +1,7 @@
 #pragma once
 #include "Framework/GameObject.h"
 #include "Renderer/Model.h"
+#include "Framework/Component.h"
 
 namespace pb {
 
@@ -9,18 +10,24 @@ namespace pb {
 	class Actor : public GameObject {
 	public:
 		Actor() = default;
-		Actor(const Model& modelIn,const Transform& transformIn) :
+		Actor(const Transform& transformIn) :
 			GameObject{transformIn}
-			,m_model{modelIn} {}
+			 {}
 
-		virtual void Update() override {}
+		virtual void Update() override;
 		virtual void Draw(Renderer& renderer);
 
+		void AddComponent(std::unique_ptr<Component> component);
+
 		friend class Scene;
+		friend class Component;
+
+		template<typename T>
+		T* GetComponent();
 
 		virtual void OnCollision(Actor* collided) {}
 
-		float GetRadius() { return m_model.GetRadius() * m_transform.scale; }
+		float GetRadius() { return m_model.GetRadius() * std::max(m_transform.scale.x, m_transform.scale.y); }
 		std::string& GetTag() { return m_tag; }
 
 	protected:
@@ -32,6 +39,16 @@ namespace pb {
 
 		Scene* m_scene = nullptr;
 		Model m_model;
-	};
 
+		std::vector<std::unique_ptr<Component>> m_components;
+
+	};
+	template<typename T>
+	inline T* Actor::GetComponent() {
+		for (auto& component : m_components) {
+			T* result = dynamic_cast<T*>(component.get());
+			if (result) return result;
+		}
+		return nullptr;
+	}
 }

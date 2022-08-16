@@ -16,6 +16,11 @@ namespace pb {
 		}
 	}
 
+	bool Font::Create(std::string filename, ...)
+	{
+		return false;
+	}
+
 	void Font::Load(const std::string& filename, int fontSize)
 	{
 		// !! call TTF_OpenFont  

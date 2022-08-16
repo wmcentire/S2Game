@@ -2,6 +2,7 @@
 #include <iostream>
 #include <cmath>
 #include <string>
+#include <sstream>
 
 namespace pb {
 	struct Vector2 {
@@ -13,6 +14,8 @@ namespace pb {
 		Vector2(int x, int y) : x{(float)x},y{(float)y} {}
 
 		void Set(float x, float y) { this->x = x; this->y = y; }
+		float operator [] (size_t index) const { return (&x)[index]; }
+		float& operator [] (size_t index) { return (&x)[index]; }
 
 		//math ops
 		Vector2 operator + (const Vector2& v) const{ return Vector2{ x + v.x, y + v.y }; }
@@ -61,7 +64,16 @@ namespace pb {
 
 		static Vector2 Rotate(const Vector2& v, float angle);
 
+		static const Vector2 one;
+		static const Vector2 zero;
+		static const Vector2 up;
+		static const Vector2 down;
+		static const Vector2 left;
+		static const Vector2 right;
+
 	};
+
+	std::istream& operator >> (std::istream& stream, Vector2& v);
 
 	inline float Vector2::LengthSqr() { return x * x + y * y; }
 	inline float Vector2::Length() { return std::sqrt(x * x + y * y); }
@@ -80,7 +92,7 @@ namespace pb {
 	{
 		float length = Length();
 
-		return Vector2{x/length,y/length};
+		return (length == 0) ? Vector2{ 0,0 } : Vector2{ x / length,y / length };
 	}
 
 	inline void Vector2::Normalize()
@@ -99,20 +111,6 @@ namespace pb {
 		float y = v.x * std::sin(angle) + v.y * std::cos(angle);
 
 		return Vector2{x,y};
-	}
-	inline std::istream& operator >> (std::istream& stream, Vector2& v)
-	{
-		std::string line;
-		std::getline(stream, line);
-
-		// { ##, ## }
-		std::string xs = line.substr(line.find("{") + 1, line.find(",") - line.find("{") - 1);
-		v.x = std::stof(xs);
-
-		std::string ys = line.substr(line.find(",") + 1, line.find("}") - line.find(",") - 1);
-		v.y = std::stof(ys);
-
-		return stream;
 	}
 
 }

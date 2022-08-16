@@ -13,6 +13,10 @@ namespace pb {
 	const uint32_t C_key_down = SDL_SCANCODE_DOWN;
 	const uint32_t C_key_left = SDL_SCANCODE_LEFT;
 	const uint32_t C_key_right = SDL_SCANCODE_RIGHT;
+	const uint32_t C_key_w = SDL_SCANCODE_W;
+	const uint32_t C_key_a = SDL_SCANCODE_A;
+	const uint32_t C_key_s = SDL_SCANCODE_S;
+	const uint32_t C_key_d = SDL_SCANCODE_D;
 	const uint32_t C_key_escape = SDL_SCANCODE_ESCAPE;
 
 

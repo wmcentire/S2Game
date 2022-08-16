@@ -1,6 +1,7 @@
 #include "Model.h"
 #include "Core/File.h"
 #include <sstream>
+#include <Core/Logger.h>
 
 namespace pb
 {
@@ -9,7 +10,16 @@ namespace pb
         Load(filename);
         m_radius = CalculateRadius();
     }
-    void Model::Draw(pb::Renderer& renderer, const pb::Vector2& position, float angle, float scale)
+    bool Model::Create(std::string filename, ...)
+    {
+        if (!Load(filename))
+        {
+            LOG("!! ERROR !! could not create model%s", filename.c_str());
+            return false;
+        }
+        return true;
+    }
+    void Model::Draw(pb::Renderer& renderer, const pb::Vector2& position, float angle, const pb::Vector2& scale)
     {
         for (int i = 0; i < m_points.size() - 1; i++)
         {
@@ -19,27 +29,38 @@ namespace pb
             renderer.DrawLine(p1, p2, m_color);
         }
     }
-    void Model::Load(const std::string& filename)
+    bool Model::Load(const std::string& filename)
     {
         std::string buffer;
 
-        pow_fi::ReadFile(filename, buffer);
+        if (!pow_fi::ReadFile(filename, buffer))
+        {
+            LOG("Error could not load file %s", filename.c_str());
+            return false;
+        }
 
 
         std::istringstream stream(buffer);
+        //read color
         stream >> m_color;
 
-
-        //std::cout << "load\n";
         std::string line;
-        std::getline(stream,line);
+        std::getline(stream, line);
 
+        //get number of points
         size_t numPoints = std::stoi(line);
-        for (size_t i = 0; i < numPoints; i++) {
-            pb::Vector2 v;
-            stream >> v;
-            m_points.push_back(v);
+
+        for (size_t i = 0; i < numPoints; i++)
+        {
+            Vector2 point;
+
+            stream >> point;
+
+            m_points.push_back(point);
+
+
         }
+        return true;
     }
     float Model::CalculateRadius()
     {

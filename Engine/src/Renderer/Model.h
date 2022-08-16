@@ -1,10 +1,11 @@
 #pragma once
 #include "Renderer.h"
+#include "Resources/Resource.h"
 #include <vector>
 #include <iostream>
 
 namespace pb {
-    class Model
+    class Model : public Resource
     {
     public:
         Model() = default;
@@ -17,8 +18,10 @@ namespace pb {
             //std::vector<int> cints{ints};
         }
 
-        void Draw(pb::Renderer& renderer, const pb::Vector2& position, float angle, float scale);
-        void Load(const std::string& filename);
+        bool Create(std::string filename, ...) override;
+
+        void Draw(pb::Renderer& renderer, const pb::Vector2& position, float angle, const Vector2& scale = Vector2{1,1});
+        bool Load(const std::string& filename);
         float CalculateRadius();
 
         float GetRadius() { return m_radius; }

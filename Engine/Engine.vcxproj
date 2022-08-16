@@ -156,6 +156,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\Audio\AudioSystem.cpp" />
+    <ClCompile Include="src\Components\AudioComponent.cpp" />
+    <ClCompile Include="src\Components\PhysicsComponent.cpp" />
+    <ClCompile Include="src\Components\PlayerComponent.cpp" />
+    <ClCompile Include="src\Components\SpriteComponent.cpp" />
     <ClCompile Include="src\Core\Logger.cpp" />
     <ClCompile Include="src\Core\Time.cpp" />
     <ClCompile Include="src\Core\File.cpp" />
@@ -164,22 +168,38 @@
     <ClCompile Include="src\Framework\Actor.cpp" />
     <ClCompile Include="src\Framework\Scene.cpp" />
     <ClCompile Include="src\Input\InputSystem.cpp" />
+    <ClCompile Include="src\Math\Color.cpp" />
     <ClCompile Include="src\Math\MathUtils.cpp" />
+    <ClCompile Include="src\Math\Matrix2x2.cpp" />
+    <ClCompile Include="src\Math\Matrix3x3.cpp" />
+    <ClCompile Include="src\Math\Vector2.cpp" />
     <ClCompile Include="src\Renderer\Font.cpp" />
     <ClCompile Include="src\Renderer\Model.cpp" />
     <ClCompile Include="src\Renderer\Renderer.cpp" />
     <ClCompile Include="src\Renderer\Text.cpp" />
     <ClCompile Include="src\Renderer\Texture.cpp" />
+    <ClCompile Include="src\Resources\ResourceManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Audio\AudioSystem.h" />
+    <ClInclude Include="src\Components\AudioComponent.h" />
+    <ClInclude Include="src\Components\ModelComponent.h" />
+    <ClInclude Include="src\Components\PhysicsComponent.h" />
+    <ClInclude Include="src\Components\PlayerComponent.h" />
+    <ClInclude Include="src\Components\RenderComponent.h" />
+    <ClInclude Include="src\Components\SpriteComponent.h" />
     <ClInclude Include="src\Core\Logger.h" />
     <ClInclude Include="src\Core\Time.h" />
     <ClInclude Include="src\Engine.h" />
     <ClInclude Include="src\Framework\Actor.h" />
+    <ClInclude Include="src\Framework\Component.h" />
+    <ClInclude Include="src\Framework\Factory.h" />
     <ClInclude Include="src\Framework\Game.h" />
     <ClInclude Include="src\Framework\GameObject.h" />
     <ClInclude Include="src\Framework\Scene.h" />
+    <ClInclude Include="src\Framework\Singleton.h" />
+    <ClInclude Include="src\Math\Matrix2x2.h" />
+    <ClInclude Include="src\Math\Matrix3x3.h" />
     <ClInclude Include="src\Math\Transform.h" />
     <ClInclude Include="src\Core\File.h" />
     <ClInclude Include="src\Core\Memory.h" />
@@ -188,11 +208,14 @@
     <ClInclude Include="src\Math\MathUtils.h" />
     <ClInclude Include="src\Math\Random.h" />
     <ClInclude Include="src\Math\Vector2.h" />
+    <ClInclude Include="src\Math\Vector3.h" />
     <ClInclude Include="src\Renderer\Font.h" />
     <ClInclude Include="src\Renderer\Model.h" />
     <ClInclude Include="src\Renderer\Renderer.h" />
     <ClInclude Include="src\Renderer\Text.h" />
     <ClInclude Include="src\Renderer\Texture.h" />
+    <ClInclude Include="src\Resources\Resource.h" />
+    <ClInclude Include="src\Resources\ResourceManager.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

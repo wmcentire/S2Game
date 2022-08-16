@@ -64,6 +64,10 @@ namespace pb {
 	extern const uint32_t C_key_left;
 	extern const uint32_t C_key_right;
 	extern const uint32_t C_key_escape;
+	extern const uint32_t C_key_w;
+	extern const uint32_t C_key_a;
+	extern const uint32_t C_key_s;
+	extern const uint32_t C_key_d;
 	
 }
 

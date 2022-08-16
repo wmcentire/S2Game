@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "Actor.h"
+#include <iostream>
 
 namespace pb {
 	void Scene::Update()
@@ -9,7 +10,6 @@ namespace pb {
 		while (iter != m_actors.end()) {
 			(*iter)->Update();
 			//Extra update for extra fast
-			//(*iter)->Update();
 			if ((*iter)->m_destroy){
 				iter = m_actors.erase(iter);
 			}

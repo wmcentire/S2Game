@@ -10,7 +10,12 @@ namespace pb {
 	const Color Color::green{0,255,0,255};
 	const Color Color::blue{0,0,255,255};
 
+	std::ostream& operator<<(std::ostream& stream, const Color& color)
+	{
+		stream << (int)color.r << " " << (int)color.g << " " << (int)color.b << " " << (int)color.a;
 
+		return stream;
+	}
 
 	std::istream& operator >> (std::istream& stream, Color& c)
 	{

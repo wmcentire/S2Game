@@ -13,6 +13,18 @@ int main() {
 	pb::InitializeMemory();
 	pow_fi::SetFilePath("../Assets");
 
+	//json
+	rapidjson::Document document;
+	bool success = pb::json::Load("json.txt", document);
+
+	int i1;
+	pb::json::Get(document, "integer1", i1);
+	std::cout << i1 << std::endl;
+
+	int i2;
+	pb::json::Get(document, "integer2", i2);
+	std::cout << i2 << std::endl;
+
 	pb::g_audiosystem.Initialize();
 	pb::g_inputSystem.Initialize();
 	pb::g_renderer.Initialize();
@@ -45,7 +57,8 @@ int main() {
 	//add spriteC
 	std::unique_ptr<pb::SpriteComponent> sComponent = std::make_unique<pb::SpriteComponent>();
 
-	std::shared_ptr<pb::Texture> texture = pb::g_resources.Get<pb::Texture>("cheese",&pb::g_renderer);
+	std::shared_ptr<pb::Texture> texture = pb::g_resources.Get<pb::Texture>("sprites/C4.png",&pb::g_renderer);
+	sComponent->m_texture = texture;
 	player->AddComponent(std::move(sComponent));
 
 	//add audioC

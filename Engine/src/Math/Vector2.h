@@ -14,8 +14,9 @@ namespace pb {
 		Vector2(int x, int y) : x{(float)x},y{(float)y} {}
 
 		void Set(float x, float y) { this->x = x; this->y = y; }
-		float operator [] (size_t index) const { return (&x)[index]; }
-		float& operator [] (size_t index) { return (&x)[index]; }
+
+		float operator [] (size_t index) const { return (&x)[index]; } //(index == 0) ? x : y; }
+		float& operator [] (size_t index) { return (&x)[index]; } //(index == 0) ? x : y; }
 
 		//math ops
 		Vector2 operator + (const Vector2& v) const{ return Vector2{ x + v.x, y + v.y }; }
@@ -40,9 +41,11 @@ namespace pb {
 		Vector2 operator *= (float s) { x *= s; y *= s; return *this; }
 		Vector2 operator /= (float s) { x /= s; y /= s; return *this; }
 
+
 		// unary
 		// Flip to negative
 		Vector2 operator - () { return Vector2{-x,-y }; }
+
 
 		//compare
 
@@ -74,6 +77,7 @@ namespace pb {
 	};
 
 	std::istream& operator >> (std::istream& stream, Vector2& v);
+	std::ostream& operator << (std::ostream& stream, const Vector2& v);
 
 	inline float Vector2::LengthSqr() { return x * x + y * y; }
 	inline float Vector2::Length() { return std::sqrt(x * x + y * y); }

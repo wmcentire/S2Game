@@ -50,7 +50,7 @@
       },
       {
          "type":"SpriteAnimComponent",
-         "texture_name":"Textures/coin.png",
+         "texture_name":"sprites/coin.png",
          "fps":12,
          "num_columns":8,
          "num_rows":1,

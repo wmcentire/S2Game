@@ -45,8 +45,13 @@ int main() {
 	scene1.Read(document);
 	scene1.Initialize();
 
-	auto actor = pb::Factory::Instance().Create<pb::Actor>("Coin");
+	for (int i = 0; i < 20; i++) {
+		auto actor = pb::Factory::Instance().Create<pb::Actor>("Coin");
+		actor->m_transform.position = { pb::randomf(0,800), 100.0f };
+		actor->Initialize();
 
+		scene1.Add(std::move(actor));
+	}
 	bool gameOver = false;
 	while (!gameOver) {
 		//update

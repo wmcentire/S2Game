@@ -10,7 +10,7 @@ namespace pb
 	public:
 
 		SpriteAnimComponent() = default;
-
+		CLASS_DECLARATION(SpriteAnimComponent)
 		// Inherited via RenderComponent
 		virtual void Update() override;
 		virtual void Draw(Renderer& renderer) override;

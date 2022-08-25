@@ -86,6 +86,7 @@
          "type":"Actor",
          "name":"Player",
          "tag":"Player",
+	 "prefab":true,
          "transform":{
             "position":[
                400,

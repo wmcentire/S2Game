@@ -7,7 +7,7 @@ namespace pb {
 	public:
 		RBPhysicsComponent() = default;
 		~RBPhysicsComponent();
-
+		CLASS_DECLARATION(RBPhysicsComponent)
 		virtual void ApplyForce(const Vector2& force) override;
 		void Update() override;
 		virtual void Initialize() override;

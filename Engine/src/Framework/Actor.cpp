@@ -3,7 +3,17 @@
 #include "Factory.h"
 
 namespace pb {
+	Actor::Actor(const Actor& other)
+	{
+		name = other.name;
+		tag = other.tag;
+		m_scene = other.m_scene;
 
+		for (auto& component : other.m_components) {
+			auto clone = std::unique_ptr<Component>((Component*)component->Clone().release());
+			AddComponent(std::move(clone));
+		}
+	}
 	void Actor::Update()
 	{
 		for (auto& component : m_components)
@@ -66,6 +76,11 @@ namespace pb {
 		for (auto& child : m_children) {
 			child->Initialize();
 		}
+	}
+
+	std::unique_ptr<GameObject> Actor::Clone()
+	{
+		return std::unique_ptr<GameObject>();
 	}
 
 	

@@ -19,24 +19,7 @@ namespace pb {
 			}
 		}
 		
-		//check collision
-		for (auto iter1 = m_actors.begin(); iter1 != m_actors.end(); iter1++) {
-			for (auto iter2 = m_actors.begin(); iter2 != m_actors.end(); iter2++) {
-				if (iter1 == iter2) 
-					continue;
-				//now the collision math
-				float radius = (*iter1)->GetRadius() + (*iter2)->GetRadius();
-				float distance = (*iter1)->m_transform.position.Distance( (*iter2)->m_transform.position);
-				if (distance < radius) {
-					//COLIDES
-					(*iter1)->OnCollision((*iter2).get());
-					(*iter2)->OnCollision((*iter1).get());
-				}
-				else {
-					//DOES NOT COLIDE
-				}
-			}
-		}
+		
 
 		/*
 		for (auto& actor : m_actors) { 
@@ -81,6 +64,17 @@ namespace pb {
 			auto actor = Factory::Instance().Create<Actor>(type);
 			if (actor) {
 				actor->Read(actorValue);
+				
+				bool prefab = false;
+				READ_DATA(actorValue, prefab);
+
+				if (prefab) {
+					std::string name = actor->GetName();
+					Factory::Instance().RegisterPrefab(actor->GetName(), std::move(actor));
+				}
+				else {
+
+				}
 				Add(std::move(actor));
 			}
 		}

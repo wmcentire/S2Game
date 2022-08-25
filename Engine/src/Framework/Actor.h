@@ -10,9 +10,12 @@ namespace pb {
 	class Actor : public GameObject, public ISerializable {
 	public:
 		Actor() = default;
+		Actor(const Actor& other);
 		Actor(const Transform& transformIn) :
 			GameObject{transformIn}
 			 {}
+
+		//CLASS_DECLARATION(Actor)
 
 		virtual void Update() override;
 		virtual void Draw(Renderer& renderer);
@@ -38,6 +41,9 @@ namespace pb {
 		virtual bool Write(const rapidjson::Value& value) const override;
 
 		virtual bool Read(const rapidjson::Value& value) override;
+		
+		virtual void Initialize() override;
+		virtual std::unique_ptr<GameObject> Clone() override;
 
 	protected:
 		std::string name;
@@ -45,8 +51,7 @@ namespace pb {
 
 
 		bool m_destroy = false;
-		Vector2 m_velocity;
-		float m_damping = 1;
+		
 
 		Scene* m_scene = nullptr;
 		Model m_model;
@@ -56,8 +61,6 @@ namespace pb {
 
 
 
-		// Inherited via GameObject
-		virtual void Initialize() override;
 
 	};
 	template<typename T>

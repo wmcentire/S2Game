@@ -13,9 +13,10 @@ namespace pb {
 	{
 	public:
 		Scene() = default;
+		Scene(const Scene& other) {}
 		Scene(Game* game) : m_game{game}{}
 		~Scene() = default;
-
+		CLASS_DECLARATION(Scene)
 		void Update();
 		void Draw(Renderer& renderer);
 		virtual bool Write(const rapidjson::Value& value) const override;

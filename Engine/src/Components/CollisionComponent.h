@@ -18,7 +18,7 @@ namespace pb {
 		// Inherited via ICollision
 		virtual void OnCollisionEnter(Actor* other) override;
 		virtual void OnCollisionExit(Actor* other) override;
-
+		CLASS_DECLARATION(CollisionComponent)
 		void SetCollisionEnter(functionPtr function) { m_enterFunction = function; }
 		void SetCollisionExit(functionPtr function) { m_exitFunction = function; }
 

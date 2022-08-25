@@ -1,11 +1,14 @@
 #pragma once
 #include "Resources/Resource.h"
+#include "Core/Logger.h"
 #include <string>
 
 struct _TTF_Font;
+struct SDL_Surface;
 
 namespace pb
 {
+	struct Color;
 	class Font : public Resource
 	{
 	public:
@@ -16,11 +19,10 @@ namespace pb
 		bool Create(std::string filename, ...) override;
 		void Load(const std::string& filename, int fontSize);
 
-
+		SDL_Surface* CreateSurface(const std::string& text, const Color& color);
 
 		friend class Text;
-
 	private:
-		_TTF_Font* m_ttfFont = nullptr;
+		_TTF_Font* m_ttfFont{ nullptr };
 	};
 }

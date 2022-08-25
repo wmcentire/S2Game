@@ -2,12 +2,17 @@
 #include "rapidjson/document.h"
 #include <string>
 
-namespace pb {
-	struct Vector2;
-	struct Color;
-}
+#define READ_DATA(value, data) pb::json::Get(value, #data, data)
+
+
 
 namespace pb {
+	
+	//forward decs
+	struct Vector2;
+	struct Color;
+	struct Rect;
+	
 	namespace json {
 		bool Load(const std::string& filename, rapidjson::Document& document);
 
@@ -17,5 +22,6 @@ namespace pb {
 		bool Get(const rapidjson::Value& value, const std::string& name, std::string& data);
 		bool Get(const rapidjson::Value& value, const std::string& name, Vector2& data);
 		bool Get(const rapidjson::Value& value, const std::string& name, Color& data);
+		bool Get(const rapidjson::Value& value, const std::string& name, Rect& data);
 	}
 }

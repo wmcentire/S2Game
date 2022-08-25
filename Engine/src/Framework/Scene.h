@@ -1,4 +1,6 @@
 #pragma once
+#include "Serialization/Serializable.h"
+#include "GameObject.h"
 #include <list>
 #include <memory>
 
@@ -7,7 +9,7 @@ namespace pb {
 	class Actor;
 	class Renderer;
 	class Game;
-	class Scene
+	class Scene : public GameObject, public ISerializable
 	{
 	public:
 		Scene() = default;
@@ -16,8 +18,12 @@ namespace pb {
 
 		void Update();
 		void Draw(Renderer& renderer);
+		virtual bool Write(const rapidjson::Value& value) const override;
+		virtual bool Read(const rapidjson::Value& value) override;
 
 		void Add(std::unique_ptr<Actor> actor);
+		virtual void Initialize() override;
+		void RemoveAll();
 
 		template<typename T>
 		T* GetActor();
@@ -26,6 +32,9 @@ namespace pb {
 	private:
 		std::list<std::unique_ptr<Actor>> m_actors;
 		Game* m_game;
+
+
+		
 	};
 	template<typename T>
 	inline T* Scene::GetActor()

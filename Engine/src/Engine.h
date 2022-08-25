@@ -18,12 +18,17 @@
 #include "Renderer/Texture.h"
 #include "Components/PlayerComponent.h"
 #include "Components/SpriteComponent.h"
+#include "Components/SpriteAnimComponent.h"
 #include "Components/AudioComponent.h"
 #include "Components/PhysicsComponent.h"
 #include "Components/ModelComponent.h"
 #include "Resources/ResourceManager.h"
 #include "Framework/Singleton.h"
 #include "Framework/Factory.h"
+#include "Physics/PhysicsSystem.h"
+#include "Components/RBPhysicsComponent.h"
+#include "Components/CollisionComponent.h"
+#include "Components/TextComponent.h"
 #include <vector>
 #include <memory>
 
@@ -34,6 +39,7 @@ namespace pb {
 	extern Renderer g_renderer;
 	extern AudioSystem g_audiosystem;
 	extern ResourceManager g_resources;
+	extern PhysicsSystem g_physicssystem;
 
 	class Engine : public Singleton<Engine> {
 	public:

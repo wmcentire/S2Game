@@ -1,25 +1,24 @@
 #pragma once
 #include "Framework/Component.h"
+#include "Physics/Collision.h"
 
 namespace pb
 {
-	class PlayerComponent : public Component
+	class PlayerComponent : public Component, public ICollision
 	{
 	public:
 		PlayerComponent() = default;
 
+		void Initialize() override;
 		void Update() override;
-
-	private:
-
-		pb::Vector2 m_velocity;
-
-		float m_maxSpeedX{ 250 };
-		float m_gravity{ 50 };
-		float m_speedX{ 0 };
-		float m_speedY{ 0 };
-		float m_drag{ 1.0f };
-		float m_health{ 10 };
 		
+		virtual bool Write(const rapidjson::Value& value) const override;
+		virtual bool Read(const rapidjson::Value& value) override;
+
+		virtual void OnCollisionEnter(Actor* other) override;
+		virtual void OnCollisionExit(Actor* other) override;
+
+	public:
+		float speed = 0;
 	};
 }

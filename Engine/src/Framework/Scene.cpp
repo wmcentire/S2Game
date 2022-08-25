@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "Actor.h"
+#include "Factory.h"
 #include <iostream>
 
 namespace pb {
@@ -53,5 +54,36 @@ namespace pb {
 	void Scene::Add(std::unique_ptr<Actor> actor) {
 		actor->m_scene = this;
 		m_actors.push_back(std::move(actor));
+	}
+	void Scene::Initialize()
+	{
+		for (auto& actor : m_actors) {
+			actor->Initialize();
+		}
+	}
+	void Scene::RemoveAll()
+	{
+		m_actors.clear();
+	}
+	bool Scene::Write(const rapidjson::Value& value) const
+	{
+		return false;
+	}
+	bool Scene::Read(const rapidjson::Value& value)
+	{
+		if (!value.HasMember("actors") || !value["actors"].IsArray()) {
+			return false;
+		}
+		for (auto& actorValue : value["actors"].GetArray()) {
+			std::string type;
+			READ_DATA(actorValue, type);
+
+			auto actor = Factory::Instance().Create<Actor>(type);
+			if (actor) {
+				actor->Read(actorValue);
+				Add(std::move(actor));
+			}
+		}
+		return true;
 	}
 }

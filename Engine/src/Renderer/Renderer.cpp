@@ -1,6 +1,7 @@
 #include "Renderer.h" 
 #include "Texture.h"
 #include "Math/Transform.h"
+#include "Math/Rect.h"
 #include <SDL.h>
 #include <SDL_ttf.h> 
 #include <SDL_image.h>
@@ -118,6 +119,37 @@ namespace pb
 		SDL_Point center{ (int)origin.x,(int)origin.y };
 
 		SDL_RenderCopyEx(m_renderer, texture->m_texture, nullptr, &dest, transform.rotation, &center, SDL_FLIP_NONE);
+		// SDL_FLIP_VERTICAL 
+		// SDL_FLIP_HORIZONTAL
+	}
+
+	void Renderer::Draw(std::shared_ptr<Texture> texture, const Rect& source, const Transform& transform, const Vector2& scale, const Vector2& registration)
+	{
+		Vector2 size = Vector2(source.w, source.h);
+		size = size * transform.scale;
+
+		Vector2 origin = (size * registration);
+		Vector2 tposition = transform.position - origin;
+
+
+		SDL_Rect dest;
+		// !! make sure to cast to int to prevent compiler warnings 
+		dest.x = tposition.x;// !! set to position x 
+		dest.y = tposition.y;// !! set to position y 
+		dest.w = size.x;// !! set to size x 
+		dest.h = size.y;// !! set to size y 
+
+		SDL_Rect src;
+		src.x = source.x;
+		src.y = source.y;
+		src.w = source.w;
+		src.h = source.h;
+
+
+		SDL_Point center{ (int)origin.x,(int)origin.y };
+
+
+		SDL_RenderCopyEx(m_renderer, texture->m_texture, &src, &dest, transform.rotation, &center, SDL_FLIP_NONE);
 		// SDL_FLIP_VERTICAL 
 		// SDL_FLIP_HORIZONTAL
 	}

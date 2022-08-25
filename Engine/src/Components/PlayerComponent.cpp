@@ -4,26 +4,46 @@
 
 namespace pb
 {
+	void PlayerComponent::Initialize()
+	{
+		auto component = m_owner->GetComponent<CollisionComponent>();
+		if (component) {
+			component->SetCollisionEnter(std::bind(&PlayerComponent::OnCollisionEnter, this, std::placeholders::_1));
+			component->SetCollisionExit(std::bind(&PlayerComponent::OnCollisionExit, this, std::placeholders::_1));
+		}
+	}
 	void PlayerComponent::Update()
 	{
-		
+		int jumpLimit = 0;
 		//button checks
 			// - movement
 		float thrust = 0;
 		
 		pb::Vector2 direction{ 0,0 };
 		if (g_inputSystem.GetKeyState(C_key_w) == pb::InputSystem::HELD) {
-			thrust = 500;
+			auto component = m_owner->GetComponent<PhysicsComponent>();
+			if (component)
+			{
+				jumpLimit += 1 * g_time.deltaTime;
+				//create a jump cap
+				if (jumpLimit < 800) {
+					component->ApplyForce(Vector2::up * speed);
+				}
+			}
+		}
+		//resets the jump limit counter
+		if (g_inputSystem.GetKeyState(C_key_w) == pb::InputSystem::HELD) {
+			jumpLimit = 0;
 		}
 		if (g_inputSystem.GetKeyState(C_key_a) == pb::InputSystem::HELD) {
-			m_owner->m_transform.rotation -= 180 * pb::g_time.deltaTime;
+			direction = Vector2::left;
 		}
 		if (g_inputSystem.GetKeyState(C_key_s) == pb::InputSystem::HELD) {
 			//dash downwards
-			thrust = -500;
+			thrust = -speed;
 		}
 		if (g_inputSystem.GetKeyState(C_key_d) == pb::InputSystem::HELD) {
-			m_owner->m_transform.rotation += 180 * pb::g_time.deltaTime;
+			direction = Vector2::right;
 		}
 		if (g_inputSystem.GetKeyState(C_key_space) == pb::InputSystem::PRESSED) {
 
@@ -36,7 +56,6 @@ namespace pb
 			// - firing
 		if (g_inputSystem.GetKeyState(C_key_left) == pb::InputSystem::PRESSED) {
 			//implement shooting bullet
-			std::cout << "leftpressed \n";
 			auto component = m_owner->GetComponent<AudioComponent>();
 			if (component) {
 				component->PlaySound();
@@ -51,19 +70,29 @@ namespace pb
 			}
 		}
 
-		auto componentT =  m_owner->GetComponent<PhysicsComponent>();
-		if (componentT) {
-			//thrust
-			Vector2 force = Vector2::Rotate({1,0},m_owner->m_transform.rotation) * thrust;
-			componentT->ApplyForce(force);
-
-			//gravity
-			force = (Vector2{ 300,300 } - m_owner->m_transform.position).Normalized() * 100.0f;
-			componentT->ApplyForce(force);
+		auto component = m_owner->GetComponent<PhysicsComponent>();
+		if (component)
+		{
+			component->ApplyForce(direction * speed);
 		}
 
-		
+		//m_owner->m_transform.position += direction * 300 * g_time.deltaTime;
+	}
+	bool PlayerComponent::Write(const rapidjson::Value& value) const
+	{
+		return false;
+	}
+	bool PlayerComponent::Read(const rapidjson::Value& value)
+	{
+		READ_DATA(value, speed);
+		return true;
+	}
+	void PlayerComponent::OnCollisionEnter(Actor* other)
+	{
 
-		m_owner->m_transform.position += direction * 300 * pb::g_time.deltaTime;
+	}
+	void PlayerComponent::OnCollisionExit(Actor* other)
+	{
+
 	}
 }

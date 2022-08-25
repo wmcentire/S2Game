@@ -20,7 +20,7 @@ namespace pb {
 
         bool Create(std::string filename, ...) override;
 
-        void Draw(pb::Renderer& renderer, const pb::Vector2& position, float angle, const Vector2& scale = Vector2{1,1});
+        void Draw(pb::Renderer& renderer, const pb::Vector2& position, float angle = 0, const Vector2& scale = Vector2{1,1});
         bool Load(const std::string& filename);
         float CalculateRadius();
 

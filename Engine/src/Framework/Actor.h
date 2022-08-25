@@ -7,7 +7,7 @@ namespace pb {
 
 	class Scene;
 
-	class Actor : public GameObject {
+	class Actor : public GameObject, public ISerializable {
 	public:
 		Actor() = default;
 		Actor(const Transform& transformIn) :
@@ -28,10 +28,21 @@ namespace pb {
 		virtual void OnCollision(Actor* collided) {}
 
 		float GetRadius() { return m_model.GetRadius() * std::max(m_transform.scale.x, m_transform.scale.y); }
-		std::string& GetTag() { return m_tag; }
+		const std::string& GetTag() { return tag; }
+		void SetTag(const std::string& tag) { this->tag = tag; }
+
+		const std::string& GetName() { return name; }
+		void SetName(const std::string& name) { this->name = name; }
+		
+		// Inherited via ISerializable
+		virtual bool Write(const rapidjson::Value& value) const override;
+
+		virtual bool Read(const rapidjson::Value& value) override;
 
 	protected:
-		std::string m_tag;
+		std::string name;
+		std::string tag;
+
 
 		bool m_destroy = false;
 		Vector2 m_velocity;
@@ -41,6 +52,12 @@ namespace pb {
 		Model m_model;
 
 		std::vector<std::unique_ptr<Component>> m_components;
+		std::vector<std::unique_ptr<Actor>> m_children;
+
+
+
+		// Inherited via GameObject
+		virtual void Initialize() override;
 
 	};
 	template<typename T>

@@ -45,6 +45,8 @@ int main() {
 	scene1.Read(document);
 	scene1.Initialize();
 
+	auto actor = pb::Factory::Instance().Create<pb::Actor>("Coin");
+
 	bool gameOver = false;
 	while (!gameOver) {
 		//update

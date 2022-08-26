@@ -7,6 +7,8 @@ namespace pb {
 	{
 		name = other.name;
 		tag = other.tag;
+		m_transform = other.m_transform;
+
 		m_scene = other.m_scene;
 
 		for (auto& component : other.m_components) {

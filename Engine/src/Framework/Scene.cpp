@@ -50,7 +50,7 @@ namespace pb {
 	}
 	bool Scene::Write(const rapidjson::Value& value) const
 	{
-		return false;
+		return true;
 	}
 	bool Scene::Read(const rapidjson::Value& value)
 	{
@@ -70,12 +70,11 @@ namespace pb {
 
 				if (prefab) {
 					std::string name = actor->GetName();
-					Factory::Instance().RegisterPrefab(actor->GetName(), std::move(actor));
+					Factory::Instance().RegisterPrefab(name, std::move(actor));
 				}
 				else {
-
+					Add(std::move(actor));
 				}
-				Add(std::move(actor));
 			}
 		}
 		return true;

@@ -89,7 +89,9 @@ namespace pb
 	}
 	void PlayerComponent::OnCollisionEnter(Actor* other)
 	{
-
+		if (other->GetName() == "Coin") {
+			other->SetDestroy();
+		}
 	}
 	void PlayerComponent::OnCollisionExit(Actor* other)
 	{

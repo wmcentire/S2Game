@@ -16,21 +16,24 @@ namespace pb {
 	}
 	void Actor::Update()
 	{
-		for (auto& component : m_components)
-		{
-			component->Update();
+		if (!active) {
+			for (auto& component : m_components)
+			{
+				component->Update();
+			}
 		}
 	}
 	void Actor::Draw(Renderer& renderer)
 	{
-		for (auto& component : m_components)
-		{
-			auto renderComponent = dynamic_cast<RenderComponent*>(component.get());
-			if (renderComponent)
+		if (!active) {
+			for (auto& component : m_components)
 			{
-				renderComponent->Draw(renderer);
+				auto renderComponent = dynamic_cast<RenderComponent*>(component.get());
+				if (renderComponent)
+				{
+					renderComponent->Draw(renderer);
+				}
 			}
-			//component->Update();
 		}
 	}
 
@@ -50,6 +53,7 @@ namespace pb {
 	{
 		READ_DATA(value, tag);
 		READ_DATA(value, name);
+		READ_DATA(value, active);
 
 		if (value.HasMember("transform")) m_transform.Read(value["transform"]);
 		if (value.HasMember("components") && value["components"].IsArray()) {
@@ -57,10 +61,11 @@ namespace pb {
 
 				std::string type;
 				READ_DATA(compValue, type);
-
+				std::cout << type << std::endl;
 				auto component = Factory::Instance().Create<Component>(type);
 				if (component) {
 					component->Read(compValue);
+					
 					AddComponent(std::move(component));
 				}
 			}
@@ -70,6 +75,7 @@ namespace pb {
 
 	void Actor::Initialize()
 	{
+		std::cout << this->GetName() << std::endl;
 		for (auto& component : m_components) {
 			component->Initialize();
 		}

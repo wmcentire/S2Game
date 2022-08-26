@@ -1,4 +1,5 @@
 #include "Engine.h"
+#include "DesertStormers.h"
 #include <iostream>
 
 
@@ -27,31 +28,11 @@ int main() {
 	
 	pb::g_renderer.CreateWindow("Desert Stormers",1000,800);
 
+	std::unique_ptr<DesertStormers> game = std::make_unique<DesertStormers>();
 	
-	//add audios
-	pb::g_audiosystem.AddAudio("Laser","audio/Laser_Galaga.wav");
+	game->Initialize();
 
 	
-
-	//add font
-	auto font = pb::g_resources.Get<pb::Font>("fonts/chintzy.ttf", 10);
-
-
-	pb::Scene scene1;
-
-	rapidjson::Document document;
-	bool success = pb::json::Load("level.txt", document);
-
-	scene1.Read(document);
-	scene1.Initialize();
-
-	for (int i = 0; i < 20; i++) {
-		auto actor = pb::Factory::Instance().Create<pb::Actor>("Coin");
-		actor->m_transform.position = { pb::randomf(0,800), 100.0f };
-		actor->Initialize();
-
-		scene1.Add(std::move(actor));
-	}
 	bool gameOver = false;
 	while (!gameOver) {
 		//update
@@ -59,7 +40,7 @@ int main() {
 		pb::g_audiosystem.Update();
 		pb::g_inputSystem.Update();
 		pb::g_physicssystem.Update();
-		scene1.Update();
+		game->Update();
 		//exit
 		if (pb::g_inputSystem.GetKeyDown(pb::C_key_escape)) {
 			gameOver = true;
@@ -68,11 +49,15 @@ int main() {
 		pb::g_renderer.BeginFrame();
 		//texture
 		
-		scene1.Draw(pb::g_renderer);
+		game->Draw(pb::g_renderer);
 
 		pb::g_renderer.EndFrame();
 
 	}
+	game->Shutdown();
+	game.reset();
+	pb::Factory::Instance().ShutDown();
+
 	pb::g_renderer.Shutdown();
 	pb::g_audiosystem.Shutdown();
 	pb::g_inputSystem.Shutdown();

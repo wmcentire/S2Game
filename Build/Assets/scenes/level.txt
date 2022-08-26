@@ -21,44 +21,6 @@
             }
          ]
       },
-{
-   "type":"Actor",
-   "name":"Coin",
-   "tag":"Pickup",
-   "prefab":true,
-   "transform":{
-      "position":[
-         600,
-         200
-      ],
-      "scale":[
-         1,
-         1
-      ],
-      "rotation":0
-   },
-   "components":[
-      {
-         "type":"RBPhysicsComponent",
-         "damping":0.4,
-         "data.gravity_scale":1,
-         "data.constrain_angle":false
-      },
-      {
-         "type":"CollisionComponent",
-         "data.restitution": 0.7
-      },
-      {
-         "type":"SpriteAnimComponent",
-         "texture_name":"sprites/coin.png",
-         "fps":12,
-         "num_columns":8,
-         "num_rows":1,
-         "start_frame":1,
-         "end_frame":8
-      }
-   ]
-},
       {
          "type":"Actor",
          "name":"Floor",
@@ -90,6 +52,7 @@
       {
          "type":"Actor",
          "name":"Text",
+	 "active":false,
          "transform":{
             "position":[
                40,
@@ -105,7 +68,7 @@
             {
                "type":"TextComponent",
                "text":"Hello World!",
-               "font_name":"Fonts/font.ttf",
+               "font_name":"Fonts/chintzy.ttf",
                "font_size":16,
                "registration":[
                   0.0,
@@ -124,7 +87,7 @@
          "type":"Actor",
          "name":"Player",
          "tag":"Player",
-	 "prefab":true,
+	 "prefab":false,
          "transform":{
             "position":[
                400,

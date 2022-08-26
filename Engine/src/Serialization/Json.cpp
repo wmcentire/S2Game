@@ -160,3 +160,37 @@ bool pb::json::Get(const rapidjson::Value& value, const std::string& name, Rect&
 	
 	return true;
 }
+
+bool pb::json::Get(const rapidjson::Value& value, const std::string& name, std::vector<std::string>& data)
+{
+	// check if 'name' member exists and is an array with 2 elements 
+	if (value.HasMember(name.c_str()) == false || value[name.c_str()].IsArray()
+		== false || value[name.c_str()].Size() != 2)
+	{
+		LOG("error reading json data %s", name.c_str());
+		return false;
+
+	}
+
+	// create json array object 
+	auto& array = value[name.c_str()];
+	// get array values 
+	for (rapidjson::SizeType i = 0; i < array.Size(); i++)
+	{
+		if (!array[i].IsNumber())
+		{
+
+			LOG("error reading json data (not a float) %s", name.c_str());
+			return false;
+		}
+
+		data[i] = array[i].GetInt();
+	}
+
+	return true;
+}
+
+bool pb::json::Get(const rapidjson::Value& value, const std::string& name, std::vector<int>& data)
+{
+	return true;
+}

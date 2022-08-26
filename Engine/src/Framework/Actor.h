@@ -40,6 +40,8 @@ namespace pb {
 
 		const std::string& GetName() { return name; }
 		void SetName(const std::string& name) { this->name = name; }
+
+		Scene* GetScene() { return m_scene; }
 		
 		virtual bool Write(const rapidjson::Value& value) const override;
 		virtual bool Read(const rapidjson::Value& value) override;

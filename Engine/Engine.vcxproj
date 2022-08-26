@@ -167,6 +167,7 @@
     <ClCompile Include="src\Components\SpriteAnimComponent.cpp" />
     <ClCompile Include="src\Components\SpriteComponent.cpp" />
     <ClCompile Include="src\Components\TextComponent.cpp" />
+    <ClCompile Include="src\Components\TilemapComponent.cpp" />
     <ClCompile Include="src\Core\Logger.cpp" />
     <ClCompile Include="src\Core\Time.cpp" />
     <ClCompile Include="src\Core\File.cpp" />

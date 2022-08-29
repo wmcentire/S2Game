@@ -14,7 +14,7 @@ namespace pb
 	}
 	void PlayerComponent::Update()
 	{
-		int jumpLimit = 0;
+		float jumpLimit = 0;
 		//button checks
 			// - movement
 		float thrust = 0;
@@ -90,6 +90,11 @@ namespace pb
 	void PlayerComponent::OnCollisionEnter(Actor* other)
 	{
 		if (other->GetName() == "Coin") {
+			Event _event;
+			_event.name = "EVENT_ADD_POINTS";
+			_event.data = 100;
+
+			g_eventManager.Notify(_event);
 			other->SetDestroy();
 		}
 	}

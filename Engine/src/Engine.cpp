@@ -7,6 +7,7 @@ namespace pb {
 	AudioSystem g_audiosystem;
 	ResourceManager g_resources;
 	PhysicsSystem g_physicssystem;
+	EventManager g_eventManager;
 
 	void Engine::Register() {
 		REGISTER_CLASS(Actor);

@@ -14,7 +14,7 @@
 			"components":[
 				{
 					"type":"SpriteComponent",
-					"texture_name":"textures/tileset2_32x32.png",
+					"texture_name":"sprites/tileset2_32x32.png",
 					"source":[
 						96,
 						416,
@@ -49,7 +49,7 @@
 			"components":[
 				{
 					"type":"SpriteComponent",
-					"texture_name":"textures/tileset2_32x32.png",
+					"texture_name":"sprites/tileset2_32x32.png",
 					"source":[
 						0,
 						128,

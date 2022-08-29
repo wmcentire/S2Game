@@ -20,5 +20,6 @@ namespace pb
 
 	public:
 		float speed = 0;
+		//std::unique_ptr<GameObject> checkpoint = nullptr;
 	};
 }

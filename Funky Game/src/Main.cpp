@@ -23,6 +23,7 @@ int main() {
 	pb::g_renderer.Initialize();
 	pb::g_resources.Initialize();
 	pb::g_physicssystem.Initialize();
+	pb::g_eventManager.Initialize();
 
 	pb::Engine::Instance().Register();
 	

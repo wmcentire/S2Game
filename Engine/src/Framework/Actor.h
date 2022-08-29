@@ -15,7 +15,7 @@ namespace pb {
 			GameObject{transformIn}
 			 {}
 
-		//CLASS_DECLARATION(Actor)
+		CLASS_DECLARATION(Actor)
 
 		virtual void Update() override;
 		virtual void Draw(Renderer& renderer);
@@ -40,6 +40,7 @@ namespace pb {
 
 		const std::string& GetName() { return name; }
 		void SetName(const std::string& name) { this->name = name; }
+		bool IsDestroyed() { return m_destroy; }
 
 		Scene* GetScene() { return m_scene; }
 		
@@ -47,7 +48,7 @@ namespace pb {
 		virtual bool Read(const rapidjson::Value& value) override;
 		
 		virtual void Initialize() override;
-		virtual std::unique_ptr<GameObject> Clone() override;
+		//virtual std::unique_ptr<GameObject> Clone() override;
 
 		bool IsActive() { return active; }
 
@@ -57,7 +58,6 @@ namespace pb {
 
 		bool active = true;
 		bool m_destroy = false;
-		
 
 		Scene* m_scene = nullptr;
 		Model m_model;

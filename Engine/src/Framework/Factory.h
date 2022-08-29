@@ -26,6 +26,21 @@ namespace pb {
 		}
 	};
 
+	template<typename T>
+	class PrefabCreator : public CreatorBase {
+	public:
+		~PrefabCreator() = default;
+
+		PrefabCreator(std::unique_ptr<T> instance) : m_instance{ std::move(instance) } {}
+
+		std::unique_ptr<GameObject> Create() override {
+			return m_instance->Clone();
+		}
+	private:
+		std::unique_ptr<T> m_instance;
+
+	};
+
 	class Factory : public Singleton<Factory>
 	{
 	public:
@@ -43,20 +58,7 @@ namespace pb {
 		std::map<std::string, std::unique_ptr<CreatorBase>> m_registry;
 	};
 
-	template<typename T>
-	class PrefabCreator : public CreatorBase {
-	public:
-		~PrefabCreator() = default;
 
-		PrefabCreator(std::unique_ptr<T> instance) : m_instance{ std::move(instance) } {}
-
-		std::unique_ptr<GameObject> Create() override {
-			return std::make_unique<T>();
-		}
-	private:
-		std::unique_ptr<T> m_instance;
-
-	};
 
 	template<typename T>
 	inline void Factory::Register(const std::string& key)

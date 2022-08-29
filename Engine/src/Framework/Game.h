@@ -11,7 +11,7 @@ namespace pb {
 		//abstract ideas lol
 	public:
 		Game() = default;
-		virtual ~Game() = default;
+		virtual ~Game() = default;  
 
 		virtual void Initialize() = 0;
 		virtual void Shutdown() = 0;

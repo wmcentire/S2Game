@@ -30,8 +30,11 @@
 #include "Components/CollisionComponent.h"
 #include "Components/TextComponent.h"
 #include "Components/TilemapComponent.h"
+#include "Framework/EventManager.h"
 #include <vector>
 #include <memory>
+#include <list>
+#include <variant>
 
 
 namespace pb {
@@ -41,6 +44,7 @@ namespace pb {
 	extern AudioSystem g_audiosystem;
 	extern ResourceManager g_resources;
 	extern PhysicsSystem g_physicssystem;
+	extern EventManager g_eventManager;
 
 	class Engine : public Singleton<Engine> {
 	public:

@@ -46,6 +46,7 @@ namespace pb {
 	}
 	void Scene::RemoveAll()
 	{
+		for (auto& actor : m_actors)
 		m_actors.clear();
 	}
 	bool Scene::Write(const rapidjson::Value& value) const

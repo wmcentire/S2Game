@@ -18,7 +18,7 @@ namespace pb {
 	}
 	void Actor::Update()
 	{
-		if (!active) {
+		if (active) {
 			for (auto& component : m_components)
 			{
 				component->Update();
@@ -27,7 +27,7 @@ namespace pb {
 	}
 	void Actor::Draw(Renderer& renderer)
 	{
-		if (!active) {
+		if (active) {
 			for (auto& component : m_components)
 			{
 				auto renderComponent = dynamic_cast<RenderComponent*>(component.get());
@@ -86,10 +86,10 @@ namespace pb {
 		}
 	}
 
-	std::unique_ptr<GameObject> Actor::Clone()
-	{
-		return std::unique_ptr<GameObject>();
-	}
+	//std::unique_ptr<GameObject> Actor::Clone()
+	//{
+	//	return std::unique_ptr<GameObject>();
+	//}
 
 	
 }

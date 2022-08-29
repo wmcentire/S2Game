@@ -26,7 +26,8 @@
       },
       {
          "type":"CollisionComponent",
-         "data.restitution": 0.7
+         "data.restitution": 0.7,
+	 "data.size": [48, 48]
       },
       {
          "type":"SpriteAnimComponent",

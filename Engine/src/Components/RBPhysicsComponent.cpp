@@ -17,6 +17,8 @@ namespace pb {
 		Vector2 position = B2VEC2_TO_VECTOR2(m_body->GetPosition());
 		m_owner->m_transform.position = PhysicsSystem::WorldToScreen(position);
 		m_owner->m_transform.rotation = m_body->GetAngle();
+
+		m_velocity = B2VEC2_TO_VECTOR2(m_body->GetLinearVelocity());
 	}
 
 	void RBPhysicsComponent::Initialize()

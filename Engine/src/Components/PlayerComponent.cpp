@@ -47,12 +47,11 @@ namespace pb
 		}
 		if (g_inputSystem.GetKeyState(C_key_space) == pb::InputSystem::PRESSED) {
 
-			auto component = m_owner->GetComponent<AudioComponent>();
-			if (component)
-			{
-				component->PlaySound();
-			}
+			
 		}
+
+
+
 			// - firing
 		if (g_inputSystem.GetKeyState(C_key_left) == pb::InputSystem::PRESSED) {
 			//implement shooting bullet
@@ -70,10 +69,20 @@ namespace pb
 			}
 		}
 
+		Vector2 velocity;
+
 		auto component = m_owner->GetComponent<PhysicsComponent>();
 		if (component)
 		{
 			component->ApplyForce(direction * speed);
+			velocity = component->m_velocity;
+		}
+
+		auto renderComponent = m_owner->GetComponent<RenderComponent>();
+		if (renderComponent) {
+			if (velocity != 0) {
+				renderComponent->SetFlipHorizontal(velocity.x > 0);
+			}
 		}
 
 		//m_owner->m_transform.position += direction * 300 * g_time.deltaTime;

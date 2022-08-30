@@ -21,7 +21,6 @@ namespace pb
 
 	public:
 		std::shared_ptr<Texture> m_texture;
-		Rect source;
 
 	
 

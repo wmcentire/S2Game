@@ -16,7 +16,7 @@ namespace pb
 		virtual void Draw(Renderer& renderer) override;
 		// Inherited via RenderComponent
 		virtual bool Write(const rapidjson::Value& value) const override;
-
+		Rect& GetSource() override;
 		virtual bool Read(const rapidjson::Value& value) override;
 
 	public:

@@ -28,12 +28,20 @@ namespace pb {
     void CollisionComponent::Initialize()
     {
         auto component = m_owner->GetComponent<RBPhysicsComponent>();
-        if (component) {
+        if (component)
+        {
+            // if data was not set, get size from render component source rect 
+            if (data.size.x == 0 && data.size.y == 0) 
+                {
+                auto renderComponent = m_owner->GetComponent<RenderComponent>(); // !! check render component from the owner 
+                    if (renderComponent)
+                    {
+                        data.size = Vector2{ renderComponent->GetSource().w, renderComponent->GetSource().h};
+                    }
+                }
 
             g_physicssystem.SetCollisionBox(component->m_body, data, m_owner);
         }
-
-
     }
 
     void CollisionComponent::OnCollisionEnter(Actor* other)

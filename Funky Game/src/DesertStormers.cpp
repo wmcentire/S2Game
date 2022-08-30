@@ -42,7 +42,6 @@ void DesertStormers::Update()
 
 			m_gameState == gameState::start_level;
 
-			m_health = 3;
 		}
 		break;
 	case gameState::start_level:
@@ -54,12 +53,19 @@ void DesertStormers::Update()
 			m_scene->Add(std::move(actor));
 
 		}
+		m_health = 3;
+		
+		m_gameState = gameState::game;
 		break;
 	case gameState::player_dead:
 		m_stateTimer -= pb::g_time.deltaTime;
 		if (m_stateTimer <= 0) {
 			m_gameState = gameState::start_level;
 		}
+		break;
+	case gameState::game:
+
+
 		break;
 	}
 	m_scene->Update();

@@ -23,6 +23,7 @@ namespace pb
 		float restitution = 0.3f;
 		bool is_trigger = false;
 	};
+
 	class PhysicsSystem
 	{
 	public:
@@ -41,6 +42,7 @@ namespace pb
 		static Vector2 ScreenToWorld(const Vector2& screen) { return screen * (1.0f / pixelsPerUnit); }
 
 		void SetCollisionBox(b2Body* body, const CollisionData& data, class Actor* actor);
+		void SetCollisionBoxStatic(b2Body* body, const CollisionData& data, class Actor* actor);
 
 	private:
 

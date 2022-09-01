@@ -14,6 +14,10 @@ namespace pb {
 
     void TextComponent::SetText(const std::string& text)
     {
+        if (color.r == 0 && color.g == 0 && color.b == 0 && color.a == 0) {
+            color = color.black;
+        }
+
         m_texture->CreateFromSurface(m_font->CreateSurface(text, color), g_renderer);
 
         bool pause = false;
@@ -31,6 +35,7 @@ namespace pb {
         READ_DATA(value, font_size);
         READ_DATA(value, registration);
         READ_DATA(value, color);
+        
 
         m_font = g_resources.Get<Font>(font_name, font_size);
         //if (m_font == nullptr) std::cout << "bruh\n";

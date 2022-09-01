@@ -13,7 +13,7 @@ namespace pb
 
 	struct RigidBodyData {
 		float gravity_scale = 1;
-		bool constraint_angle = false;
+		bool constraint_angle = true;
 		bool is_dynamic = true;
 	};
 	struct CollisionData {

@@ -1,10 +1,13 @@
 #pragma once
 #include "Framework/Component.h"
 #include "Physics/Collision.h"
+#include "CharacterComponent.h"
 
 namespace pb
 {
-	class PlayerComponent : public Component, public ICollision
+	class Actor;
+
+	class PlayerComponent : public CharacterComponent
 	{
 	public:
 		PlayerComponent() = default;
@@ -17,9 +20,12 @@ namespace pb
 
 		virtual void OnCollisionEnter(Actor* other) override;
 		virtual void OnCollisionExit(Actor* other) override;
+		virtual void OnNotify(const Event& event) override;
 
 	public:
-		float speed = 0;
-		//std::unique_ptr<GameObject> checkpoint = nullptr;
+		float jump = 60;
+		int grounded = 0;
+
+		Vector2 m_checkpoint;
 	};
 }

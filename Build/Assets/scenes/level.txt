@@ -24,7 +24,7 @@
       {
          "type":"Actor",
          "name":"Text",
-	 "active":false,
+	     "active":true,
          "transform":{
             "position":[
                40,
@@ -39,7 +39,7 @@
          "components":[
             {
                "type":"TextComponent",
-               "text":"Hello World!",
+               "text":"Health: ",
                "font_name":"Fonts/chintzy.ttf",
                "font_size":16,
                "registration":[
@@ -59,7 +59,7 @@
          "type":"Actor",
          "name":"Player",
          "tag":"Player",
-	 "prefab":false,
+	     "prefab":false,
          "transform":{
             "position":[
                400,
@@ -74,11 +74,12 @@
          "components":[
             {
                "type":"PlayerComponent",
-               "speed":10
+               "speed":200,
+               "jump":200
             },
             {
                "type":"RBPhysicsComponent",
-               "damping":0.4,
+               "damping":0.1,
                "data.gravity_scale":2,
                "data.constrain_angle":true
             },
@@ -113,6 +114,27 @@
                "play_on_start":true 
             } 
          ] 
-      } 
+      }, 
+      { 
+     "type":"Actor", 
+     "name":"Camera", 
+     "transform":{ 
+         "position":[ 
+             400, 
+             300 
+         ], 
+         "scale":[ 
+             1, 
+             1 
+         ], 
+         "rotation":0 
+     }, 
+     "components":[ 
+         { 
+             "type":"CameraComponent", 
+             "viewport_size": [800, 600] 
+         } 
+     ] 
+ } 
    ]
 }

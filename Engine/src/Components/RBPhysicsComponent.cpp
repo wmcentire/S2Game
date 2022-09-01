@@ -16,7 +16,7 @@ namespace pb {
 	{
 		Vector2 position = B2VEC2_TO_VECTOR2(m_body->GetPosition());
 		m_owner->m_transform.position = PhysicsSystem::WorldToScreen(position);
-		m_owner->m_transform.rotation = m_body->GetAngle();
+		m_owner->m_transform.rotation = pb::RadToDeg(m_body->GetAngle());
 
 		m_velocity = B2VEC2_TO_VECTOR2(m_body->GetLinearVelocity());
 	}
@@ -33,6 +33,8 @@ namespace pb {
 	}
 	bool RBPhysicsComponent::Read(const rapidjson::Value& value)
 	{
+		PhysicsComponent::Read(value);
+
 		READ_DATA(value, data.gravity_scale);
 		READ_DATA(value, data.constraint_angle);
 		READ_DATA(value, data.is_dynamic);

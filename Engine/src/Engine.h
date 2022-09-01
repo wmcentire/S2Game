@@ -31,6 +31,8 @@
 #include "Components/TextComponent.h"
 #include "Components/TilemapComponent.h"
 #include "Framework/EventManager.h"
+#include "Components/CharacterComponent.h"
+#include "Components/CameraComponent.h"
 #include <vector>
 #include <memory>
 #include <list>

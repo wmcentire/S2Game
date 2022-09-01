@@ -127,7 +127,7 @@ bool pb::json::Get(const rapidjson::Value& value, const std::string& name, Color
 
 	// check if 'name' member exists and is an array with 2 elements 
 	if (value.HasMember(name.c_str()) == false || value[name.c_str()].IsArray()
-		== false || value[name.c_str()].Size() != 2)
+		== false || value[name.c_str()].Size() != 4)
 	{
 		LOG("error reading json data int color %s", name.c_str());
 		return false;

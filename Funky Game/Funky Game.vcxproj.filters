@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="GameComponents">
+      <UniqueIdentifier>{afd7aa03-7bfe-4ea4-bd8e-3734f1e8a21b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Levels">
+      <UniqueIdentifier>{d17bc788-4e78-44fb-8995-6fabcf745a27}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="src\Main.cpp">
@@ -21,10 +27,27 @@
     <ClCompile Include="src\DesertStormers.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\EnemyComponent.cpp">
+      <Filter>GameComponents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\DesertStormers.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\EnemyComponent.h">
+      <Filter>GameComponents</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Build\Assets\scenes\level.txt">
+      <Filter>Levels</Filter>
+    </Text>
+    <Text Include="..\Build\Assets\scenes\prefabs.txt">
+      <Filter>Levels</Filter>
+    </Text>
+    <Text Include="..\Build\Assets\scenes\Tilemap.txt">
+      <Filter>Levels</Filter>
+    </Text>
   </ItemGroup>
 </Project>

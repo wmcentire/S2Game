@@ -1,7 +1,8 @@
 #pragma once
 #include "Serialization/Serializable.h"
 #include "Vector2.h"
-#include "Matrix2x2.h"
+#include "MathUtils.h"
+#include "Matrix3x3.h"
 
 namespace pb {
 
@@ -9,6 +10,7 @@ namespace pb {
 		Vector2 position;
 		float rotation{ 0 };
 		Vector2 scale{ 1, 1 };
+		Matrix3x3 matrix;
 
 		Transform() = default;
 		Transform(const Vector2& position, float rotation, const Vector2& scale) : 
@@ -19,13 +21,34 @@ namespace pb {
 		// Inherited via ISerializable
 		virtual bool Write(const rapidjson::Value& value) const override;
 		virtual bool Read(const rapidjson::Value& value) override;
-		/*
-		operator Matrix2x2 () const {
-			Matrix2x2 mxScale = Matrix2x2::CreateScale(scale);
-			//Matrix2x2 mxRotation = Matrix2x2::CreateRotation(pb::DegToRad(rotation));
+		
+		void Update()
+		{
+			Matrix3x3 mxScale = Matrix3x3::CreateScale(scale);
+			Matrix3x3 mxRotation = Matrix3x3::CreateRotation(pb::DegToRad(rotation));
+			Matrix3x3 mxTranslation = Matrix3x3::CreateTranslation(position);
 
-			return { mxScale * mxRotation };
-		}*/
+			matrix = { mxTranslation * mxRotation * mxScale };
+		}
+
+		void Update(const Matrix3x3& parent)
+		{
+			Matrix3x3 mxScale = Matrix3x3::CreateScale(scale);
+			Matrix3x3 mxRotation = Matrix3x3::CreateRotation(pb::DegToRad(rotation));
+			Matrix3x3 mxTranslation = Matrix3x3::CreateTranslation(position);
+
+			matrix = { mxTranslation * mxRotation * mxScale };
+			matrix = parent * matrix;
+		}
+
+		operator Matrix3x3 () const
+		{
+			Matrix3x3 mxScale = Matrix3x3::CreateScale(scale);
+			Matrix3x3 mxRotation = Matrix3x3::CreateRotation(pb::DegToRad(rotation));
+			Matrix3x3 mxTranslation = Matrix3x3::CreateTranslation(position);
+
+			return { mxTranslation * mxRotation * mxScale };
+		}
 	};
 
 

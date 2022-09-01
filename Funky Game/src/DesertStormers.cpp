@@ -1,9 +1,12 @@
 #include "DesertStormers.h"
 #include "Engine.h"
+#include "EnemyComponent.h"
 #include <vector>
 
 void DesertStormers::Initialize()
 {
+	pb::REGISTER_CLASS(EnemyComponent);
+
 	m_scene = std::make_unique<pb::Scene>();
 
 	//read levels
@@ -37,16 +40,23 @@ void DesertStormers::Update()
 	switch (m_gameState) {
 	case gameState::title_screen:
 		if (pb::g_inputSystem.GetKeyState(pb::C_key_space) == pb::InputSystem::PRESSED) {
-
+			std::cout << "pressed game start\n";
+			m_gameState = gameState::start_level;
 			m_scene->GetActorFromName("Title")->SetActive(false);
-
-			m_gameState == gameState::start_level;
-
 		}
 		break;
 	case gameState::start_level:
+		std::cout << "level started\n";
 		for (int i = 0; i < 20; i++) {
 			auto actor = pb::Factory::Instance().Create<pb::Actor>("Coin");
+			actor->m_transform.position = { pb::randomf(0,800), 100.0f };
+			actor->Initialize();
+
+			m_scene->Add(std::move(actor));
+
+		}
+		for (int i = 0; i < 3; i++) {
+			auto actor = pb::Factory::Instance().Create<pb::Actor>("Wasp");
 			actor->m_transform.position = { pb::randomf(0,800), 100.0f };
 			actor->Initialize();
 
@@ -64,7 +74,15 @@ void DesertStormers::Update()
 		}
 		break;
 	case gameState::game:
+	{
+		auto actor = m_scene->GetActorFromName("Text");
+		auto component = actor->GetComponent<pb::TextComponent>();
 
+		auto pactor = m_scene->GetActorFromName("Player");
+		auto pcomponent = pactor->GetComponent<pb::PlayerComponent>();
+
+		component->SetText("Health: " + std::to_string(pcomponent->health));
+	}
 
 		break;
 	}

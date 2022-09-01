@@ -6,11 +6,10 @@ namespace pb
 {
 	void PlayerComponent::Initialize()
 	{
-		auto component = m_owner->GetComponent<CollisionComponent>();
-		if (component) {
-			component->SetCollisionEnter(std::bind(&PlayerComponent::OnCollisionEnter, this, std::placeholders::_1));
-			component->SetCollisionExit(std::bind(&PlayerComponent::OnCollisionExit, this, std::placeholders::_1));
-		}
+		CharacterComponent::Initialize();
+		g_eventManager.Subscribe("EVENT_CHECKPOINT", std::bind(&CharacterComponent::OnNotify, this, std::placeholders::_1), m_owner);
+
+
 	}
 	void PlayerComponent::Update()
 	{
@@ -21,15 +20,7 @@ namespace pb
 		
 		pb::Vector2 direction{ 0,0 };
 		if (g_inputSystem.GetKeyState(C_key_w) == pb::InputSystem::HELD) {
-			auto component = m_owner->GetComponent<PhysicsComponent>();
-			if (component)
-			{
-				jumpLimit += 1 * g_time.deltaTime;
-				//create a jump cap
-				if (jumpLimit < 800) {
-					component->ApplyForce(Vector2::up * speed);
-				}
-			}
+			
 		}
 		//resets the jump limit counter
 		if (g_inputSystem.GetKeyState(C_key_w) == pb::InputSystem::HELD) {
@@ -46,7 +37,17 @@ namespace pb
 			direction = Vector2::right;
 		}
 		if (g_inputSystem.GetKeyState(C_key_space) == pb::InputSystem::PRESSED) {
-
+			auto component = m_owner->GetComponent<PhysicsComponent>();
+			if (component)
+			{
+				if (grounded) {
+					jumpLimit += 1 * g_time.deltaTime;
+					//create a jump cap
+ 					if (jumpLimit < 800) {
+						component->ApplyForce(Vector2::up * jump);
+					}
+				}
+			}
 			
 		}
 
@@ -85,7 +86,12 @@ namespace pb
 			}
 		}
 
-		//m_owner->m_transform.position += direction * 300 * g_time.deltaTime;
+		// set camera 
+		auto camera = m_owner->GetScene()->GetActorFromName("Camera");
+		if (camera)
+		{
+			camera->m_transform.position = pb::Lerp(camera -> m_transform.position, m_owner->m_transform.position, 2 * g_time.deltaTime);
+		}
 	}
 	bool PlayerComponent::Write(const rapidjson::Value& value) const
 	{
@@ -93,7 +99,8 @@ namespace pb
 	}
 	bool PlayerComponent::Read(const rapidjson::Value& value)
 	{
-		READ_DATA(value, speed);
+		CharacterComponent::Read(value);
+		READ_DATA(value, jump);
 		return true;
 	}
 	void PlayerComponent::OnCollisionEnter(Actor* other)
@@ -106,9 +113,36 @@ namespace pb
 			g_eventManager.Notify(_event);
 			other->SetDestroy();
 		}
+		if (other->GetTag() == "Ground") {
+			grounded++;			
+		}
+		if (other->GetTag() == "Wasp") {
+			Event _event;
+			_event.name = "EVENT_DAMAGE";
+			_event.data = damage;
+			_event.reciever = other;
+
+			g_eventManager.Notify(_event);
+			other->SetDestroy();
+		}
 	}
 	void PlayerComponent::OnCollisionExit(Actor* other)
 	{
-
+		if (other->GetTag() == "Ground") {
+			grounded--;
+		}
+	}
+	void PlayerComponent::OnNotify(const Event& event)
+	{
+		if (event.name == "EVENT_DAMAGE") {
+			health -= std::get<float>(event.data);
+			if (health <= 0) {
+				//respawn at checkpoint
+				health = 3;
+			}
+		}
+		if (event.name == "EVENT_CHECKPOINT") {
+			m_checkpoint = std::get<Vector2>(event.data);
+		}
 	}
 }

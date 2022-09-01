@@ -136,6 +136,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\DesertStormers.cpp" />
+    <ClCompile Include="src\EnemyComponent.cpp" />
     <ClCompile Include="src\Main.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -145,6 +146,12 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\DesertStormers.h" />
+    <ClInclude Include="src\EnemyComponent.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\Build\Assets\scenes\level.txt" />
+    <Text Include="..\Build\Assets\scenes\prefabs.txt" />
+    <Text Include="..\Build\Assets\scenes\Tilemap.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
